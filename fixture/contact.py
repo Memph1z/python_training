@@ -66,3 +66,9 @@ class ContactHelper:
         driver.find_element_by_name("ayear").send_keys(contact.ayear)
         driver.find_element_by_xpath("//input[19]").click()
         self.app.go_to_home_page()
+
+    def delete_first_contact(self):
+        driver = self.app.driver
+        driver.find_element_by_name("selected[]").click()
+        driver.find_element_by_name("delete").click()
+        self.app.go_to_home_page()
