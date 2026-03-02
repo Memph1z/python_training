@@ -12,5 +12,5 @@ def app(request):
 
 def test_add_contact(app):
     app.session.login("admin", "secret")
-    app.add_new_contact(Contact("djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "5", "June", "1900", "1", "July", "1901"))
+    app.contact.add(Contact("djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "djhfkjs", "5", "June", "1900", "1", "July", "1901"))
     app.session.logout()
