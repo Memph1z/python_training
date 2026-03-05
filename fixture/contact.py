@@ -7,7 +7,7 @@ class ContactHelper:
     def add(self, contact):
         driver = self.app.driver
         driver.find_element_by_link_text("add new").click()
-        self.fill_contact_form(driver, contact)
+        self.fill_contact_form(contact)
         driver.find_element_by_xpath("//input[19]").click()
         self.app.go_to_home_page()
 
@@ -22,7 +22,7 @@ class ContactHelper:
         driver = self.app.driver
         self.open_home_page()
         driver.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
-        self.fill_contact_form(driver, contact)
+        self.fill_contact_form(contact)
         driver.find_element_by_name("update").click()
         self.app.go_to_home_page()
 
@@ -30,7 +30,8 @@ class ContactHelper:
         driver = self.app.driver
         driver.find_element_by_link_text("home").click()
 
-    def fill_contact_form(self,driver, contact):
+    def fill_contact_form(self, contact):
+        driver = self.app.driver
         driver.find_element_by_name("firstname").click()
         driver.find_element_by_name("firstname").clear()
         driver.find_element_by_name("firstname").send_keys(contact.firstname)
