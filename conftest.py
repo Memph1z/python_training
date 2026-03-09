@@ -18,6 +18,8 @@ def app(request):
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
     def fin():
+        # noinspection PyUnresolvedReferences
         fixture.session.ensure_logout()
+        # noinspection PyUnresolvedReferences
         fixture.destroy()
     request.addfinalizer(fin)
