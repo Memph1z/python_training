@@ -11,13 +11,21 @@ class Application:
     def __init__(self):
         self.driver_path = ChromeDriverManager().install()
         self.driver = webdriver.Chrome(executable_path=self.driver_path)
-        self.driver.implicitly_wait(30)
+        self.driver.implicitly_wait(5)
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True
         self.session = SessionHelper(self)
         self.group = GroupHelper(self)
         self.contact = ContactHelper(self)
+
+    def is_valid(self):
+        try:
+            # noinspection PyStatementEffect
+            self.driver.current_url
+            return True
+        except:
+            return False
 
     def go_to_home_page(self):
         driver = self.driver
