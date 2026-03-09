@@ -11,7 +11,7 @@ class Application:
     def __init__(self):
         self.driver_path = ChromeDriverManager().install()
         self.driver = webdriver.Chrome(executable_path=self.driver_path)
-        self.driver.implicitly_wait(5)
+        # self.driver.implicitly_wait(2)
         self.base_url = "https://www.google.com/"
         self.verificationErrors = []
         self.accept_next_alert = True

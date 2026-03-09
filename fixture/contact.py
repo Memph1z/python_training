@@ -28,7 +28,8 @@ class ContactHelper:
 
     def open_home_page(self):
         driver = self.app.driver
-        driver.find_element_by_link_text("home").click()
+        if not (driver.current_url.endswith("/index.php") and len (driver.find_elements_by_name("delete")) > 0):
+            driver.find_element_by_link_text("home").click()
 
     def fill_contact_form(self, contact):
         self.change_field("firstname", contact.firstname)
