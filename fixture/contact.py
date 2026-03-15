@@ -14,21 +14,38 @@ class ContactHelper:
         self.contact_cache = None
 
     def delete_first_contact(self):
+        self.delete_contact_by_index(0)
+
+    def delete_contact_by_index(self, index):
         driver = self.app.driver
         self.open_home_page()
-        driver.find_element_by_name("selected[]").click()
+        self.select_contact_by_index(index)
         driver.find_element_by_name("delete").click()
         self.app.go_to_home_page()
         self.contact_cache = None
 
-    def edit_first_contact(self, contact):
+    def select_contact_by_index(self, index):
+        driver = self.app.driver
+        driver.find_elements_by_name("selected[]")[index].click()
+
+    def select_first_contact(self, index):
+        self.select_contact_by_index(0)
+
+    def edit_contact_by_index(self, contact, index):
         driver = self.app.driver
         self.open_home_page()
-        driver.find_element_by_xpath("//table[@id='maintable']/tbody/tr[2]/td[8]/a/img").click()
+        self.modify_contact_by_index(index)
         self.fill_contact_form(contact)
         driver.find_element_by_name("update").click()
         self.app.go_to_home_page()
         self.contact_cache = None
+
+    def modify_contact_by_index(self, index):
+        driver = self.app.driver
+        driver.find_element_by_xpath(f"//table[@id='maintable']/tbody/tr[{index + 1}]/td[8]/a/img").click()
+
+    def edit_first_contact(self, contact):
+        self.edit_contact_by_index(contact, 0)
 
     def open_home_page(self):
         driver = self.app.driver
