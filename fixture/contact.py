@@ -11,6 +11,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         driver.find_element_by_xpath("//input[19]").click()
         self.app.go_to_home_page()
+        self.contact_cache = None
 
     def delete_first_contact(self):
         driver = self.app.driver
@@ -18,6 +19,7 @@ class ContactHelper:
         driver.find_element_by_name("selected[]").click()
         driver.find_element_by_name("delete").click()
         self.app.go_to_home_page()
+        self.contact_cache = None
 
     def edit_first_contact(self, contact):
         driver = self.app.driver
@@ -26,6 +28,7 @@ class ContactHelper:
         self.fill_contact_form(contact)
         driver.find_element_by_name("update").click()
         self.app.go_to_home_page()
+        self.contact_cache = None
 
     def open_home_page(self):
         driver = self.app.driver
@@ -72,14 +75,17 @@ class ContactHelper:
         self.open_home_page()
         return len(driver.find_elements_by_name("selected[]"))
 
+    contact_cache = None
+
     def get_contact_list(self):
-        driver = self.app.driver
-        self.open_home_page()
-        contacts = []
-        for element in driver.find_elements_by_xpath("//tr[@name='entry']"):
-            cells = element.find_elements_by_tag_name("td")
-            firstname = cells[2].text
-            lastname = cells[1].text
-            contact_id_value = cells[0].find_element_by_name("selected[]").get_attribute("value")
-            contacts.append(Contact(contact_id=contact_id_value, lastname=lastname, firstname=firstname))
-        return contacts
+        if self.contact_cache is None:
+            driver = self.app.driver
+            self.open_home_page()
+            self.contact_cache = []
+            for element in driver.find_elements_by_xpath("//tr[@name='entry']"):
+                cells = element.find_elements_by_tag_name("td")
+                firstname = cells[2].text
+                lastname = cells[1].text
+                contact_id_value = cells[0].find_element_by_name("selected[]").get_attribute("value")
+                self.contact_cache.append(Contact(contact_id=contact_id_value, lastname=lastname, firstname=firstname))
+        return list(self.contact_cache)
